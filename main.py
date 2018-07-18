@@ -1,33 +1,42 @@
 #! /usr/bin/env python3
 # -*- coding: utf-8 -*-
-import optparse
-parser = optparse.OptionParser()
-parser.add_option('-f', '--file')
-parser.add_option('-o','--output')
-parser.parse_args()
-options = parser.values
-
-def format_file():
-    file = open(options.__dict__['file'], 'r')
-    objfile = file.readlines()
-    return objfile
-
-def revert(list):
-    reversed_final = []
-    rlist = reversed(list)
-    for eachit in rlist:
-        reversed_final.append(eachit)
-    return reversed_final
-
-def write_in(list):
-    file = open(options.__dict__['output'],'w')
-    for eachit in list:
-        file.write(eachit)
+"""Example of use of Raptor Wordlist editor."""
+from raptor import Raptor
+import argparse
+actions = ['reverse', 'write', 'hello']
 
 
-def main():
-    x = revert(format_file())
-    write_in(x)
+def setup_args():
+    """Setups CLI arguments."""
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-f', '--file',
+                        dest='file',
+                        help='Input file',
+                        type=str)
 
-if __name__ == '__main__':
-    main()
+    parser.add_argument('-o', '--output',
+                        dest='output',
+                        help='Output file',
+                        type=str)
+
+    parser.add_argument('-i', '--init',
+                        dest='init',
+                        help='Line to start the cut',
+                        type=int)
+
+    parser.add_argument('-e', '--end', dest='end',
+                        help='Line to end the cut',
+                        type=int)
+
+    parser.add_argument('-a', '--action', dest='action',
+                        help='The action to be done',
+                        choices=actions,
+                        type=str)
+    args = parser.parse_args()
+    return args
+
+
+args = setup_args()
+word = Raptor(args.file, args.output)
+action = args.action
+word.write_reverted()

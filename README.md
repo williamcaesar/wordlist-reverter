@@ -1,8 +1,7 @@
-Wordlist Reverter
+Raptor: wordlist-reverter
 ---
-That is a simple tool for revert the order of the words in a wordlist.
+That is a simple tool for edit and create wordlists.
 
 Future improvements:
 --
-- Optimize RAM consuptiom
 - Add a filter function
